@@ -1,12 +1,13 @@
 import random
 import typing
 import time
+import networkSim
 
 MSS = 1500
 HEADER_LEN = 12 # 12B
 MTU = MSS + HEADER_LEN
 
-MAX_BUFFER_ITEM = 10
+MAX_BUFFER_ITEM = 15
 INIT_SSTHRESH = 64 << 10
 
 SEND_REQUEST_STR = 'lsend'
@@ -15,7 +16,27 @@ RECV_REQUEST_STR = 'lget'
 SERVER_PORT = 2121
 SERVER_DIR = 'dir/'
 
+PERFORM_TEST_DIR = 'performTest/'
+
 UNKNOWN = 0
+
+SAMPLE_INTERVAL = 20
+MAX_TIMEOUT_COUNT = 10
+
+networkEnv = networkSim.ideal
+networkEnv_title = 'ideal network'
+
+# networkEnv = networkSim.realNetwork(0.00005, 0.1)
+# networkEnv_title = 'simulated network'
+
+# networkEnv = networkSim.realNetwork(0.5, 0.2)
+# networkEnv_title = 'congest network'
+
+# networkEnv = networkSim.delay(0.0001, 0)
+# networkEnv_title = 'delay'
+
+# networkEnv = networkSim.disorder(0.0001, 0)
+# networkEnv_title = 'disorder'
 
 class Header():
   """LFTP Header class.
@@ -71,6 +92,18 @@ class Header():
     else:
       string += 'None'
     return string
+  
+  def shortStr(self):
+    string = 'seq = {} ack = {} flag: '.format(self.seq, self.ack)
+    if self.SYN or self.ACK or self.FIN or self.SRC or self.REJ:
+      string += 'SYN ' if self.SYN else ''
+      string += 'ACK ' if self.ACK else ''
+      string += 'FIN ' if self.FIN else ''
+      string += 'SRC ' if self.SRC else ''
+      string += 'REJ ' if self.REJ else ''
+    else:
+      string += 'None'
+    return string
 
 def headerParse(datagram:bytes) -> (Header, bytes):
   headerByte = datagram[0:HEADER_LEN]
@@ -106,4 +139,4 @@ def warn(msg:str):
   log('[warning] ' + msg)
 
 def debug(*k, **kw):
-  log(*k, **kw)
+  log('[debug]', *k, **kw)

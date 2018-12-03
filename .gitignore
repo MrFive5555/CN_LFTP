@@ -1,0 +1,4 @@
+dir/*
+.vscode
+__pycache__
+performTest/*
