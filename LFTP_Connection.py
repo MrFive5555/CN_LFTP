@@ -115,7 +115,8 @@ class LFTP_Connection():
       segment, addr = self._socket.recvfrom(MTU)
       self.mailbox.put_nowait((segment, addr))
 
-  def newConnectionTo(self, addr, connectionType, path, performTest=False):
+  def newConnectionTo(self, addr, connectionType, path, 
+      performTest=False, testTitle=''):
     client_isn = generateISN()
     connection = {
       'state': ConnectionState.WAIT_CONNECT,
@@ -135,8 +136,9 @@ class LFTP_Connection():
     }
     self._table[addr] = connection
     if performTest:
+      title = testTitle if testTitle != '' else networkEnv_title
       connection['performTest'] = {
-        'title': networkEnv_title,
+        'title': title,
         'beginTime': time.time(),
         'time': [0],
         'byte': [0]
