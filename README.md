@@ -23,8 +23,10 @@ LFTP lget myserver mylargefile
 - LFTP使用UDP作为传输层协议
 - LFTP保证100%的传输可靠性
 - LFTP实现了类似TCP的流控制
+- LFTP实现了流水线式的报文传输
 - LFTP实现了类似TCP的拥塞控制
 - LFTP允许多个用户同时进行文件传输
+- LFTP能够拒绝未建立连接的用户进行文件交换
 
 # 文档
 设计文档，测试文档见项目目录中的doc文件夹
