@@ -30,3 +30,15 @@ LFTP lget myserver mylargefile
 
 # 文档
 设计文档，测试文档见项目目录中的doc文件夹
+
+# 性能测试
+> 详细测试结果请查看doc文件夹下的测试文档
+## 理想网络传输
+![](https://github.com/MrFive5555/CN_LFTP/blob/master/doc/result_pic/ideal%20network.png?raw=true)  
+在理想网络环境下传输时，文件几乎是匀速传输
+## 模拟拥塞网络
+![](https://github.com/MrFive5555/CN_LFTP/blob/master/doc/result_pic/simulated%20network.png?raw=true)  
+在模拟的拥塞网络下，传输曲线表现出了更复杂的形状，在传输过程中会有速度的变化，但总体没有与理想情况下的直线形状偏差太多（因为模拟网络中的时延有一个固定的均值）。而当我们靠近一点看的时候，可以看见曲线上有一些不光滑的凹凸，这些是出现较大时延或丢包时出现时的波动。
+## 多用户同时传输
+![](https://github.com/MrFive5555/CN_LFTP/blob/master/doc/result_pic/multiClient.png?raw=true)  
+这里我们让三个用户同时向服务器请求文件，可以看见，三者之间没有一个会全部占用网络带宽，服务器可以较公平地处理这三个连接的传输请求。
