@@ -1,0 +1,2 @@
+# !/bin/bash
+python3 LFTP_client.py $1 $2 $3

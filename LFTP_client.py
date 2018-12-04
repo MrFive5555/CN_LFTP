@@ -15,9 +15,8 @@ def hint():
     + '           or: LFTP ' + RECV_REQUEST_STR + '  <myserver> <mylargefile>')
 
 def main():
-  _type = sys.argv[1]
   if len(sys.argv) != 4 \
-    or (_type != 'lget' and _type != 'lsend'):
+    or (sys.argv[1] != 'lget' and sys.argv[1] != 'lsend'):
     hint()
     return
 
@@ -29,7 +28,7 @@ def main():
     port = int(port_s)
 
   path = sys.argv[3]
-  if _type == 'lsend' and not os.path.exists(path):
+  if sys.argv[1] == 'lsend' and not os.path.exists(path):
     print('the sending file: "{}" do not exist'.format(path))
     return
 
